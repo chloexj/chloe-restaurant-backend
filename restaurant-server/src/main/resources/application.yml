@@ -1,0 +1,57 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-circular-references: true
+  datasource:
+    druid:
+      driver-class-name: ${chloe.datasource.driver-class-name}
+      url: jdbc:mysql://${chloe.datasource.host}:${chloe.datasource.port}/${chloe.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: ${chloe.datasource.username}
+      password: ${chloe.datasource.password}
+#  Redis application
+  redis:
+   host: ${chloe.redis.host}
+   port: ${chloe.redis.port}
+   auth: ${chloe.redis.auth}
+   database: ${chloe.redis.database}
+
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.chloe.entity
+  configuration:
+    #开启驼峰命名
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com:
+      chloe:
+        mapper: debug
+        service: info
+        controller: info
+
+chloe:
+  jwt:
+    # 设置jwt签名加密时使用的秘钥
+    admin-secret-key: chloe
+    # 设置jwt过期时间
+    admin-ttl: 9999999999999999
+    # 设置前端传递过来的令牌名称
+    admin-token-name: token
+#    token for wechat user
+    user-secret-key: chloeForWX
+    user-ttl: 9999999999999999
+    user-token-name: authentication
+  wechat:
+    appid: ${chloe.wechat.appid}
+    secret: ${chloe.wechat.secret}
+  aws:
+    access-key: ${chloe.aws.access-key}
+    secret-key: ${chloe.aws.secret-key}
+    region: ${chloe.aws.region}
+    bucket-name: ${chloe.aws.bucket-name}
